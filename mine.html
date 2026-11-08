@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSwap - Student Skill Exchange</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">SkillSwap ✨</div>
+    <nav>
+        <button onclick="showPage('home')">Home</button>
+        <button onclick="showPage('about')">About</button>
+        <button onclick="showPage('register')">Register</button>
+        <button onclick="showPage('students')">Students</button>
+        <button onclick="showPage('matching')">Find Matches</button>
+    </nav>
+</header>
+
+<!-- HOME PAGE -->
+<section id="home" class="page active">
+    <div class="hero">
+        <h1>Share Your Skills</h1>
+        <h2>Learn New Skills, Grow Together!</h2>
+        <p>
+            Connect with students, share your knowledge
+            and discover new learning opportunities.
+        </p>
+        <button onclick="showPage('register')">
+            Get Started →
+        </button>
+    </div>
+
+    <div class="container">
+        <h2>Welcome to SkillSwap</h2>
+        <p>
+            A platform where students teach what they know
+            and learn what they want.
+        </p>
+
+        <div class="cards">
+            <div class="card">
+                <h3>👩‍🎓 Registration</h3>
+                <p>Create your student profile.</p>
+            </div>
+
+            <div class="card">
+                <h3>💡 Share Skills</h3>
+                <p>Share your knowledge with others.</p>
+            </div>
+
+            <div class="card">
+                <h3>🤝 Skill Matching</h3>
+                <p>Find suitable learning partners.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT PAGE -->
+<section id="about" class="page container">
+    <h1>About SkillSwap</h1>
+
+    <p>
+        SkillSwap is a student-to-student skill-sharing
+        platform where students exchange their knowledge
+        and learn new skills without spending money.
+    </p>
+
+    <h2>Project Objective</h2>
+    <p>
+        To connect students with different skills and
+        encourage knowledge sharing and teamwork.
+    </p>
+
+    <h2>Benefits</h2>
+    <ul>
+        <li>Free knowledge sharing.</li>
+        <li>Improves communication.</li>
+        <li>Builds confidence.</li>
+        <li>Develops technical skills.</li>
+        <li>Encourages teamwork.</li>
+    </ul>
+
+    <h2>Future Enhancements</h2>
+    <p>
+        AI skill matching, online chat, video sessions,
+        notifications and student feedback.
+    </p>
+</section>
+
+<!-- REGISTRATION PAGE -->
+<section id="register" class="page container">
+    <h1>Student Registration</h1>
+
+    <form id="studentForm">
+
+        <label>Full Name</label>
+        <input type="text" id="name" required>
+
+        <label>Email</label>
+        <input type="email" id="email" required>
+
+        <label>Department</label>
+        <input type="text" id="department" required>
+
+        <label>Year</label>
+        <select id="year" required>
+            <option value="">Select Year</option>
+            <option>1st Year</option>
+            <option>2nd Year</option>
+            <option>3rd Year</option>
+            <option>4th Year</option>
+        </select>
+
+        <label>Skills I Can Teach</label>
+        <input type="text" id="teach"
+               placeholder="C, Python, HTML" required>
+
+        <label>Skills I Want to Learn</label>
+        <input type="text" id="learn"
+               placeholder="Java, Web Design" required>
+
+        <label>Contact Number or Email (optional)</label>
+        <input type="text" id="contact">
+
+        <label class="permission">
+            <input type="checkbox" id="permission">
+            Allow my contact details to be shown to matching students.
+        </label>
+
+        <button type="submit">Submit Details</button>
+
+    </form>
+
+    <p id="message"></p>
+</section>
+
+<!-- STUDENT DIRECTORY -->
+<section id="students" class="page container">
+    <h1>Registered Students</h1>
+
+    <input type="text" id="search"
+           placeholder="Search students..."
+           oninput="displayStudents()">
+
+    <div id="studentList" class="cards"></div>
+
+    <button onclick="exportData()">Download Student Data</button>
+</section>
+
+<!-- MATCHING PAGE -->
+<section id="matching" class="page container">
+    <h1>Find Your Skill Match</h1>
+
+    <label>Select Your Name</label>
+    <select id="studentSelect">
+        <option value="">Select Student</option>
+    </select>
+
+    <button onclick="findMatches()">Find Matches</button>
+
+    <div id="results"></div>
+</section>
+
+<footer>
+    <h3>SkillSwap ✨</h3>
+    Share Your Skills - Learn New Skills - Grow Together!
+    <p>© 2026 SkillSwap Student Project</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f3ff;
+    color: #222;
+}
+
+header {
+    background: white;
+    padding: 20px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    box-shadow: 0 2px 10px #ddd;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+    color: #5145cd;
+}
+
+nav button {
+    background: transparent;
+    color: #333;
+    margin: 5px;
+    padding: 10px;
+}
+
+button {
+    background: #5145cd;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #3730a3;
+}
+
+.hero {
+    text-align: center;
+    padding: 100px 20px;
+    color: white;
+    background: linear-gradient(
+        120deg, #5145cd, #0891b2
+    );
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.hero h2 {
+    margin-bottom: 20px;
+}
+
+.hero p {
+    margin-bottom: 25px;
+}
+
+.hero button {
+    background: white;
+    color: #5145cd;
+}
+
+.container {
+    padding: 50px 8%;
+}
+
+.container h1,
+.container h2 {
+    color: #5145cd;
+    margin-bottom: 20px;
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    width: 250px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px #0001;
+}
+
+.card h3 {
+    margin-bottom: 12px;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+form {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    max-width: 650px;
+    box-shadow: 0 5px 20px #0001;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+}
+
+.permission {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+}
+
+.permission input {
+    width: auto;
+}
+
+form button {
+    margin-top: 20px;
+    width: 100%;
+}
+
+#message {
+    margin-top: 15px;
+    color: green;
+    font-weight: bold;
+}
+
+.student-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 12px 0;
+    box-shadow: 0 4px 12px #0001;
+}
+
+.match-card {
+    background: #e7fff3;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 20px;
+    border: 1px solid #8bd7b5;
+}
+
+.match-card h3 {
+    color: #087f5b;
+    margin-bottom: 12px;
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    background: #172554;
+    color: white;
+    margin-top: 30px;
+}
+
+@media(max-width: 650px) {
+    header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    .container {
+        padding: 30px 5%;
+    }
+
+    .card {
+        width: 100%;
+    }
+}// Five sample student profiles
+const demoStudents = [
+    {
+        id: 1,
+        name: "Aarav",
+        email: "aarav@example.com",
+        department: "CSE",
+        year: "1st Year",
+        teach: ["C Programming", "HTML"],
+        learn: ["Python", "Graphic Design"],
+        contact: "aarav@example.com",
+        permission: true
+    },
+    {
+        id: 2,
+        name: "Diya",
+        email: "diya@example.com",
+        department: "ECE",
+        year: "1st Year",
+        teach: ["Python", "Graphic Design"],
+        learn: ["C Programming", "HTML"],
+        contact: "diya@example.com",
+        permission: true
+    },
+    {
+        id: 3,
+        name: "Rahul",
+        email: "rahul@example.com",
+        department: "EEE",
+        year: "2nd Year",
+        teach: ["Java", "Excel"],
+        learn: ["Web Design", "Communication"],
+        contact: "rahul@example.com",
+        permission: true
+    },
+    {
+        id: 4,
+        name: "Meera",
+        email: "meera@example.com",
+        department: "Civil",
+        year: "1st Year",
+        teach: ["Web Design", "Communication"],
+        learn: ["Java", "Excel"],
+        contact: "meera@example.com",
+        permission: true
+    },
+    {
+        id: 5,
+        name: "Sana",
+        email: "sana@example.com",
+        department: "ECE",
+        year: "2nd Year",
+        teach: ["Public Speaking", "Canva"],
+        learn: ["Python", "C Programming"],
+        contact: "sana@example.com",
+        permission: true
+    }
+];
+
+// Load saved information
+let students;
+
+try {
+    students = JSON.parse(
+        localStorage.getItem("skillswapData")
+    ) || demoStudents.map(s => ({...s}));
+} catch {
+    students = demoStudents.map(s => ({...s}));
+}
+
+// Change pages
+function showPage(page) {
+
+    document.querySelectorAll(".page").forEach(p => {
+        p.classList.remove("active");
+    });
+
+    document.getElementById(page).classList.add("active");
+
+    if (page === "students") {
+        displayStudents();
+    }
+
+    if (page === "matching") {
+        updateSelect();
+    }
+
+    window.scrollTo(0, 0);
+}
+
+// Save student information
+function saveData() {
+    localStorage.setItem(
+        "skillswapData",
+        JSON.stringify(students)
+    );
+}
+
+// Registration
+document.getElementById("studentForm")
+.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const email = document.getElementById("email")
+        .value.trim().toLowerCase();
+
+    if (students.some(s => s.email.toLowerCase() === email)) {
+        document.getElementById("message").innerText =
+            "This email is already registered.";
+        return;
+    }
+
+    const student = {
+        id: Date.now(),
+
+        name: document.getElementById("name").value.trim(),
+
+        email: email,
+
+        department: document.getElementById("department")
+            .value.trim(),
+
+        year: document.getElementById("year").value,
+
+        teach: document.getElementById("teach")
+            .value.split(",")
+            .map(x => x.trim())
+            .filter(Boolean),
+
+        learn: document.getElementById("learn")
+            .value.split(",")
+            .map(x => x.trim())
+            .filter(Boolean),
+
+        contact: document.getElementById("contact")
+            .value.trim(),
+
+        permission: document.getElementById("permission")
+            .checked
+    };
+
+    students.push(student);
+
+    saveData();
+
+    document.getElementById("message").innerText =
+        "Registration successful! Your details are saved.";
+
+    this.reset();
+
+    updateSelect();
+});
+
+// Display registered students
+function displayStudents() {
+
+    const search = document.getElementById("search")
+        .value.toLowerCase();
+
+    const list = document.getElementById("studentList");
+
+    const filtered = students.filter(s =>
+        [s.name, s.department, ...s.teach, ...s.learn]
+        .join(" ")
+        .toLowerCase()
+        .includes(search)
+    );
+
+    if (filtered.length === 0) {
+        list.innerHTML = "<p>No students found.</p>";
+        return;
+    }
+
+    list.innerHTML = filtered.map(s => `
+        <div class="student-card">
+            <h3>${escapeHTML(s.name)}</h3>
+            <p>Department: ${escapeHTML(s.department)}</p>
+            <p>Year: ${escapeHTML(s.year)}</p>
+            <p>Can teach: ${s.teach.map(escapeHTML).join(", ")}</p>
+            <p>Wants to learn: ${s.learn.map(escapeHTML).join(", ")}</p>
+        </div>
+    `).join("");
+}
+
+// Fill student selection list
+function updateSelect() {
+
+    const select = document.getElementById("studentSelect");
+
+    const previous = select.value;
+
+    select.innerHTML =
+        '<option value="">Select Student</option>';
+
+    students.forEach(s => {
+
+        const option = document.createElement("option");
+
+        option.value = s.id;
+        option.textContent = s.name + " - " + s.department;
+
+        select.appendChild(option);
+    });
+
+    select.value = previous;
+}
+
+// Compare skills
+function findMatches() {
+
+    const id = document.getElementById("studentSelect").value;
+
+    const selected = students.find(s => String(s.id) === id);
+
+    const results = document.getElementById("results");
+
+    if (!selected) {
+        results.innerHTML = "<p>Please select your profile.</p>";
+        return;
+    }
+
+    const matches = students.filter(s =>
+        s.id !== selected.id
+    ).map(s => {
+
+        const matchingSkills = s.teach.filter(skill =>
+            selected.learn.some(wanted =>
+                wanted.toLowerCase() === skill.toLowerCase()
+            )
+        );
+
+        const mutualSkills = s.learn.filter(skill =>
+            selected.teach.some(wanted =>
+                wanted.toLowerCase() === skill.toLowerCase()
+            )
+        );
+
+        return {
+            student: s,
+            matchingSkills,
+            mutualSkills
+        };
+
+    }).filter(m => m.matchingSkills.length > 0);
+
+    if (matches.length === 0) {
+        results.innerHTML =
+            "<p>No matching students found. Try adding more skills.</p>";
+        return;
+    }
+
+    results.innerHTML =
+        "<h2>Matching Students Found!</h2>";
+
+    matches.forEach(m => {
+
+        const s = m.student;
+
+        let contactInfo = "Contact details are not shared by this student.";
+
+        if (s.permission && s.contact) {
+            contactInfo = `
+                <p><b>Contact:</b> ${escapeHTML(s.contact)}</p>
+            `;
+        }
+
+        results.innerHTML += `
+            <div class="match-card">
+
+                <h3>🤝 ${escapeHTML(s.name)}</h3>
+
+                <p>Department: ${escapeHTML(s.department)}</p>
+
+                <p>Year: ${escapeHTML(s.year)}</p>
+
+                <p><b>Can teach you:</b>
+                ${m.matchingSkills.map(escapeHTML).join(", ")}</p>
+
+                <p><b>You can teach them:</b>
+                ${m.mutualSkills.length
+                    ? m.mutualSkills.map(escapeHTML).join(", ")
+                    : "No direct two-way match"}</p>
+
+                ${contactInfo}
+
+            </div>
+        `;
+    });
+}
+
+// Escape user-entered text before displaying it
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, c => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[c]);
+}
+
+// Download student information as CSV
+function exportData() {
+
+    const rows = [
+        ["Name", "Email", "Department", "Year",
+         "Can Teach", "Wants to Learn"]
+    ];
+
+    students.forEach(s => {
+        rows.push([
+            s.name,
+            s.email,
+            s.department,
+            s.year,
+            s.teach.join("; "),
+            s.learn.join("; ")
+        ]);
+    });
+
+    const csv = rows.map(row =>
+        row.map(value =>
+            '"' + String(value).replace(/"/g, '""') + '"'
+        ).join(",")
+    ).join("\n");
+
+    const blob = new Blob([csv], {
+        type: "text/csv"
+    });
+
+    const link = document.createElement("a");
+
+    link.href = URL.createObjectURL(blob);
+    link.download = "SkillSwap_Students.csv";
+    link.click();
+
+    URL.revokeObjectURL(link.href);
+}
+
+// Initialize website
+updateSelect();
